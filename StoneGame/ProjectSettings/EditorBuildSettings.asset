@@ -4,4 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Awake.unity
+    guid: 0ad590964b2cd3140b96001baf026df7
+  - enabled: 1
+    path: Assets/Scenes/StoneGame.unity
+    guid: ee51961fc8a95544f9aba55e71fb12b3
+  - enabled: 1
+    path: Assets/Scenes/Final.unity
+    guid: 153f90e3ec37627458abe65c97043f05

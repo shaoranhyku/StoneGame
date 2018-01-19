@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainLoop : MonoBehaviour {
     // Array de GameObject donde sus componentes cero, uno y dos
@@ -21,6 +22,10 @@ public class MainLoop : MonoBehaviour {
     public float minX = -30f, maxX = 30f;
     // Posición Z del lanzamiento de la piedra
     public float minZ = -5f, maxZ = 5f;
+
+    public int amountStones = 20;
+
+
     // Permitir que se lancen piedras
     private bool enableStones = true;
     private Rigidbody rigidbody;
@@ -32,7 +37,8 @@ public class MainLoop : MonoBehaviour {
 
     private IEnumerator ThrowStones()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
+
         while (enableStones)
         {
             GameObject stone = Instantiate(stones[UnityEngine.Random.Range(0, stones.Length)]);
@@ -47,10 +53,20 @@ public class MainLoop : MonoBehaviour {
 
             rigidbody.AddForce(Vector3.up * UnityEngine.Random.Range(minAntiGravity, maxAntiGravity), ForceMode.Impulse);
             rigidbody.AddForce(Vector3.right * UnityEngine.Random.Range(minLateralForce, maxLateralForce), ForceMode.Impulse);
-            yield return new WaitForSeconds(UnityEngine.Random.Range(minTimeBetweenStones, maxTimeBetweeStones));
+
+            GameManager.stonesThrown++;
+
+            if (GameManager.stonesThrown == amountStones)
+            {
+                enableStones = false;
+                yield return new WaitForSeconds(6f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(UnityEngine.Random.Range(minTimeBetweenStones, maxTimeBetweeStones));
+            }
         }
-
-
+        SceneManager.LoadScene("Final");
     }
 
     // Update is called once per frame
